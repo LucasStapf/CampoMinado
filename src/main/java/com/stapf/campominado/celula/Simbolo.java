@@ -48,7 +48,8 @@ public enum Simbolo {
         public Pane getSimbolo() {
 
             Pane pane = new StackPane();
-            pane.setStyle("-fx-background-color: darkgray; -fx-border-color: gray");
+            pane.setStyle("-fx-background-color: silver;" +
+                    "-fx-border-color: gray;");
             pane.getChildren().add(getText("1", Color.BLUE));
 
             return pane;
@@ -59,8 +60,75 @@ public enum Simbolo {
         @Override
         public Pane getSimbolo() {
             Pane pane = new StackPane();
-            pane.setStyle("-fx-background-color: darkgray; -fx-border-color: gray");
+            pane.setStyle("-fx-background-color: silver;" +
+                    "-fx-border-color: gray;");
             pane.getChildren().add(getText("2", Color.GREEN));
+            return pane;
+        }
+    },
+
+    TRES {
+        @Override
+        public Pane getSimbolo() {
+            Pane pane = new StackPane();
+            pane.setStyle("-fx-background-color: silver;" +
+                    "-fx-border-color: gray;");
+            pane.getChildren().add(getText("3", Color.RED));
+            return pane;
+        }
+    },
+
+    QUATRO {
+        @Override
+        public Pane getSimbolo() {
+            Pane pane = new StackPane();
+            pane.setStyle("-fx-background-color: silver;" +
+                    "-fx-border-color: gray;");
+            pane.getChildren().add(getText("4", Color.DARKBLUE));
+            return pane;
+        }
+    },
+
+    CINCO {
+        @Override
+        public Pane getSimbolo() {
+            Pane pane = new StackPane();
+            pane.setStyle("-fx-background-color: silver;" +
+                    "-fx-border-color: gray;");
+            pane.getChildren().add(getText("5", Color.DARKRED));
+            return pane;
+        }
+    },
+
+    SEIS {
+        @Override
+        public Pane getSimbolo() {
+            Pane pane = new StackPane();
+            pane.setStyle("-fx-background-color: silver;" +
+                    "-fx-border-color: gray;");
+            pane.getChildren().add(getText("6", Color.DARKGREEN));
+            return pane;
+        }
+    },
+
+    SETE {
+        @Override
+        public Pane getSimbolo() {
+            Pane pane = new StackPane();
+            pane.setStyle("-fx-background-color: silver;" +
+                    "-fx-border-color: gray;");
+            pane.getChildren().add(getText("7", Color.ORANGE));
+            return pane;
+        }
+    },
+
+    OITO {
+        @Override
+        public Pane getSimbolo() {
+            Pane pane = new StackPane();
+            pane.setStyle("-fx-background-color: silver;" +
+                    "-fx-border-color: gray;");
+            pane.getChildren().add(getText("8", Color.PURPLE));
             return pane;
         }
     };
@@ -70,7 +138,7 @@ public enum Simbolo {
     private static Text getText(String numero, Color color) {
         Text text = new Text();
         text.setText(numero);
-        text.setFont(Font.font("Verdana", FontWeight.BOLD,16));
+        text.setFont(Font.font("Verdana", FontWeight.BOLD,14));
         text.setFill(color);
         return text;
     }
