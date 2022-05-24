@@ -1,6 +1,5 @@
 package com.stapf.campominado.celula;
 
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -46,12 +45,10 @@ public enum Simbolo {
     UM {
         @Override
         public Pane getSimbolo() {
-
             Pane pane = new StackPane();
             pane.setStyle("-fx-background-color: silver;" +
                     "-fx-border-color: gray;");
             pane.getChildren().add(getText("1", Color.BLUE));
-
             return pane;
         }
     },
@@ -129,6 +126,41 @@ public enum Simbolo {
             pane.setStyle("-fx-background-color: silver;" +
                     "-fx-border-color: gray;");
             pane.getChildren().add(getText("8", Color.PURPLE));
+            return pane;
+        }
+    },
+
+    BANDEIRA {
+        @Override
+        public Pane getSimbolo() {
+            Pane pane = new StackPane();
+            pane.setStyle("-fx-background-color: lightgray;" +
+                    "-fx-border-color: white gray gray white;" +
+                    "-fx-border-width: 2;" +
+                    "-fx-border-radius: 1;");
+            pane.getChildren().add(getText("!", Color.BLACK));
+            return pane;
+        }
+    },
+
+    BOMBA {
+        @Override
+        public Pane getSimbolo() {
+            Pane pane = new StackPane();
+            pane.setStyle("-fx-background-color: silver;" +
+                    "-fx-border-color: gray;");
+            pane.getChildren().add(getText("B", Color.BLACK));
+            return pane;
+        }
+    },
+
+    BOMBA_EXPLODIDA {
+        @Override
+        public Pane getSimbolo() {
+            Pane pane = new StackPane();
+            pane.setStyle("-fx-background-color: red;" +
+                    "-fx-border-color: gray;");
+            pane.getChildren().add(getText("B", Color.BLACK));
             return pane;
         }
     };
