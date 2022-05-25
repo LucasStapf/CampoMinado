@@ -2,9 +2,11 @@ package com.stapf.campominado;
 
 import com.stapf.campominado.celula.Celula;
 import com.stapf.campominado.celula.Simbolo;
+import com.stapf.campominado.celula.Status;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -101,6 +103,12 @@ public class Campo extends GridPane {
         setStyle("-fx-border-color: gray white white gray; -fx-border-width: 3; -fx-border-radius: 2");
     }
 
+    /**
+     * Contabiliza o número de minas ao redor de uma determinada célula (linha, coluna) e retorna esse valor.
+     * @param linha linha onde se encontra a célula.
+     * @param coluna coluna onde se encontra a célula.
+     * @return o número de minas vizinhas à célula.
+     */
     private int minasVizinhasDaCelula(int linha, int coluna) {
 
         /*
@@ -157,8 +165,60 @@ public class Campo extends GridPane {
         return minasVizinhas;
     }
 
+    /**
+     * Retorna o índice da célula no vetor de células baseando-se na sua posição na matriz do campo.
+     * @param linha linha da célula.
+     * @param coluna coluna da célula.
+     * @return o índice da célula no vetor de células.
+     */
     private int indiceCelula(int linha, int coluna) {
         return linha * numeroColunas + coluna;
     }
 
+    public void ativarCelulasVizinhasSemBombas(Celula celula) {
+
+        for (int i = 0; i < numeroLinhas; i++) {
+            for (int j = 0; j < numeroColunas; j++) {
+                if (celulas.get(indiceCelula(i,j)).equals(celula)) {
+                    ativarCelulasVizinhasSemBombas(i, j);
+                    return;
+                }
+            }
+        }
+    }
+
+    public void ativarCelulasVizinhasSemBombas(int linha, int coluna) {
+
+        if (celulas.get(indiceCelula(linha,coluna)).getMinasVizinhas() > 0
+        || celulas.get(indiceCelula(linha, coluna)).getStatus() == Status.ATIVADA) return;
+
+        // padrão: cima, direita, baixo, esquerda
+
+        if (linha - 1 >= 0) {
+            celulas.get(indiceCelula(linha - 1, coluna)).setStatus(Status.ATIVADA);
+            if (celulas.get(indiceCelula(linha - 1, coluna)).getMinasVizinhas() == 0)
+                ativarCelulasVizinhasSemBombas(linha - 1, coluna);
+        }
+
+        if (coluna + 1 < numeroColunas) {
+
+            celulas.get(indiceCelula(linha, coluna + 1)).setStatus(Status.ATIVADA);
+            if (celulas.get(indiceCelula(linha, coluna + 1)).getMinasVizinhas() == 0)
+                ativarCelulasVizinhasSemBombas(linha, coluna + 1);
+        }
+
+        if (linha + 1 < numeroLinhas) {
+
+            celulas.get(indiceCelula(linha + 1, coluna)).setStatus(Status.ATIVADA);
+            if (celulas.get(indiceCelula(linha + 1, coluna)).getMinasVizinhas() == 0)
+                ativarCelulasVizinhasSemBombas(linha + 1, coluna);
+        }
+
+        if (coluna - 1 >= 0) {
+
+            celulas.get(indiceCelula(linha, coluna - 1)).setStatus(Status.ATIVADA);
+            if (celulas.get(indiceCelula(linha, coluna - 1)).getMinasVizinhas() == 0)
+                ativarCelulasVizinhasSemBombas(linha, coluna - 1);
+        }
+    }
 }
