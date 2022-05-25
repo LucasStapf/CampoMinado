@@ -48,6 +48,7 @@ public class Campo extends GridPane {
 
     /**
      * Randomiza a posição das minas dentro do campo, excluindo a posição (l,c) da matriz.
+     *
      * @param l linha da posição onde não terá bomba.
      * @param c coluna da posição onde não terá bomba.
      */
@@ -77,6 +78,12 @@ public class Campo extends GridPane {
                 default -> celulas.get(i).setSimbolo(Simbolo.PADRAO);
             }
         }
+
+        for (int i = 0; i < numeroLinhas; i++) {
+            for (int j = 0; j < numeroColunas; j++) {
+                celulas.get(indiceCelula(i,j)).setMinasVizinhas(minasVizinhasDaCelula(i,j));
+            }
+        }
     }
 
     private void criarMatriz() {
@@ -94,7 +101,7 @@ public class Campo extends GridPane {
         setStyle("-fx-border-color: gray white white gray; -fx-border-width: 3; -fx-border-radius: 2");
     }
 
-    private int minasVizinhasDaCelula(int indiceCelula) {
+    private int minasVizinhasDaCelula(int linha, int coluna) {
 
         /*
         | c_0 | c_1 | c_2 |
@@ -106,25 +113,52 @@ public class Campo extends GridPane {
 
         int c0, c1, c2, c3, c4, c5, c6, c7;
 
-        c0 = indiceCelula - numeroColunas - 1;
-        c1 = indiceCelula - numeroColunas;
-        c2 = indiceCelula - numeroColunas + 1;
-        c3 = indiceCelula - 1;
-        c4 = indiceCelula + 1;
-        c5 = indiceCelula + numeroColunas - 1;
-        c6 = indiceCelula + numeroColunas;
-        c7 = indiceCelula + numeroColunas + 1;
+        if (linha - 1 >= 0) {
+            if (coluna - 1 >= 0) {
+                c0 = indiceCelula(linha - 1, coluna - 1);
+                if (celulas.get(c0).isMinado()) minasVizinhas++;
+            }
 
-        if (c0 >= 0 && celulas.get(c0).isMinado()) minasVizinhas++;
-        if (c1 >= 0 && celulas.get(c1).isMinado()) minasVizinhas++;
-        if (c2 >= 0 && celulas.get(c2).isMinado()) minasVizinhas++;
-        if (c3 >= 0 && celulas.get(c3).isMinado()) minasVizinhas++;
-        if (c4 >= 0 && celulas.get(c4).isMinado()) minasVizinhas++;
-        if (c5 >= 0 && celulas.get(c5).isMinado()) minasVizinhas++;
-        if (c6 >= 0 && celulas.get(c6).isMinado()) minasVizinhas++;
-        if (c7 >= 0 && celulas.get(c7).isMinado()) minasVizinhas++;
+            c1 = indiceCelula(linha - 1, coluna);
+            if (celulas.get(c1).isMinado()) minasVizinhas++;
+
+            if (coluna + 1 < numeroColunas) {
+                c2 = indiceCelula(linha - 1, coluna + 1);
+                if (celulas.get(c2).isMinado()) minasVizinhas++;
+            }
+        }
+
+        if (coluna - 1 >= 0) {
+            c3 = indiceCelula(linha, coluna - 1);
+            if (celulas.get(c3).isMinado()) minasVizinhas++;
+        }
+
+        if (coluna + 1 < numeroColunas) {
+            c4 = indiceCelula(linha, coluna + 1);
+            if (celulas.get(c4).isMinado()) minasVizinhas++;
+        }
+
+        if (linha + 1 < numeroLinhas) {
+
+            if (coluna - 1 >= 0) {
+                c5 = indiceCelula(linha + 1, coluna - 1);
+                if (celulas.get(c5).isMinado()) minasVizinhas++;
+            }
+
+            c6 = indiceCelula(linha + 1, coluna);
+            if (celulas.get(c6).isMinado()) minasVizinhas++;
+
+            if (coluna + 1 < numeroColunas) {
+                c7 = indiceCelula(linha + 1, coluna + 1);
+                if (celulas.get(c7).isMinado()) minasVizinhas++;
+            }
+        }
 
         return minasVizinhas;
+    }
+
+    private int indiceCelula(int linha, int coluna) {
+        return linha * numeroColunas + coluna;
     }
 
 }
