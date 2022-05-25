@@ -1,5 +1,6 @@
 package com.stapf.campominado.celula;
 
+import com.stapf.campominado.Gerenciador;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -17,12 +18,29 @@ public class Celula extends StackPane {
      */
     private int minasVizinhas = 0;
 
+    public int getMinasVizinhas() {
+        return minasVizinhas;
+    }
+
+    public void setMinasVizinhas(int minasVizinhas) {
+        this.minasVizinhas = minasVizinhas;
+    }
+
     /**
      * Indica qual simbolo será representado na célula.
      */
     private Simbolo simbolo = Simbolo.PADRAO;
 
     private Status status = Status.AGUARDANDO;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+        atualizaSimbolo();
+    }
 
     public Celula() {
         setMinSize(tamanhoLado, tamanhoLado);
@@ -73,7 +91,10 @@ public class Celula extends StackPane {
             if (mouseEvent.getButton() == MouseButton.PRIMARY) {
 
                 if (status != Status.AGUARDANDO) return;
-                else status = Status.ATIVADA;
+                else {
+                    Gerenciador.campo.ativarCelulasVizinhasSemBombas(Celula.this);
+                    status = Status.ATIVADA;
+                }
 
                 atualizaSimbolo();
 
