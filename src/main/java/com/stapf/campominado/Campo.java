@@ -94,4 +94,37 @@ public class Campo extends GridPane {
         setStyle("-fx-border-color: gray white white gray; -fx-border-width: 3; -fx-border-radius: 2");
     }
 
+    private int minasVizinhasDaCelula(int indiceCelula) {
+
+        /*
+        | c_0 | c_1 | c_2 |
+        | c_3 | c_X | c_4 |
+        | c_5 | c_6 | c_7 |
+         */
+
+        int minasVizinhas = 0;
+
+        int c0, c1, c2, c3, c4, c5, c6, c7;
+
+        c0 = indiceCelula - numeroColunas - 1;
+        c1 = indiceCelula - numeroColunas;
+        c2 = indiceCelula - numeroColunas + 1;
+        c3 = indiceCelula - 1;
+        c4 = indiceCelula + 1;
+        c5 = indiceCelula + numeroColunas - 1;
+        c6 = indiceCelula + numeroColunas;
+        c7 = indiceCelula + numeroColunas + 1;
+
+        if (c0 >= 0 && celulas.get(c0).isMinado()) minasVizinhas++;
+        if (c1 >= 0 && celulas.get(c1).isMinado()) minasVizinhas++;
+        if (c2 >= 0 && celulas.get(c2).isMinado()) minasVizinhas++;
+        if (c3 >= 0 && celulas.get(c3).isMinado()) minasVizinhas++;
+        if (c4 >= 0 && celulas.get(c4).isMinado()) minasVizinhas++;
+        if (c5 >= 0 && celulas.get(c5).isMinado()) minasVizinhas++;
+        if (c6 >= 0 && celulas.get(c6).isMinado()) minasVizinhas++;
+        if (c7 >= 0 && celulas.get(c7).isMinado()) minasVizinhas++;
+
+        return minasVizinhas;
+    }
+
 }
