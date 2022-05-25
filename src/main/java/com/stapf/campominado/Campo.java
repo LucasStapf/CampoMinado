@@ -1,6 +1,7 @@
 package com.stapf.campominado;
 
 import com.stapf.campominado.celula.Celula;
+import com.stapf.campominado.celula.Simbolo;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
@@ -24,6 +25,10 @@ public class Campo extends GridPane {
      */
     private int numeroMinas;
 
+    private ArrayList<Celula> celulas = new ArrayList<>();
+
+    private ArrayList<Celula> minas = new ArrayList<>();
+
     /**
      * Construtor padrão do Campo.
      */
@@ -41,38 +46,50 @@ public class Campo extends GridPane {
         criarMatriz();
     }
 
-    private void criarMatriz() {
+    /**
+     * Randomiza a posição das minas dentro do campo, excluindo a posição (l,c) da matriz.
+     * @param l linha da posição onde não terá bomba.
+     * @param c coluna da posição onde não terá bomba.
+     */
+    public void randomizaMinas(int l, int c) {
 
         int totalCelulas = numeroLinhas * numeroColunas;
 
         List<Integer> listaCelulas = new ArrayList<>();
         for (int i = 0; i < totalCelulas; i++) listaCelulas.add(i + 1);
+        listaCelulas.set((l * numeroColunas + c), 0);
 
         Random random = new Random();
-        int r = random.nextInt(totalCelulas);
-        listaCelulas.set(r, 0); // 0: indica onde o jogador irá clicar inicialmente;
 
         int minasAlocadas = 0;
         while (minasAlocadas < numeroMinas) {
-            r = random.nextInt(totalCelulas);
+            int r = random.nextInt(totalCelulas);
             if (listaCelulas.get(r) > 0) {
                 listaCelulas.set(r, -1);
                 minasAlocadas++;
             }
         }
 
+        for (int i = 0; i < totalCelulas; i++) {
+            switch (listaCelulas.get(i)) {
+                case -1 -> celulas.get(i).setMinado(true);
+                case 0 -> celulas.get(i).setSimbolo(Simbolo.PRESSIONADO);
+                default -> celulas.get(i).setSimbolo(Simbolo.PADRAO);
+            }
+        }
+    }
+
+    private void criarMatriz() {
+
+        int totalCelulas = numeroLinhas * numeroColunas;
+
         for (int i = 0, j = 0, k = 1; k < totalCelulas + 1; k++) {
             Celula celula = new Celula();
+            celulas.add(celula);
             add(celula, j, i);
-//            Button button = new Button();
-//            button.setText(listaCelulas.get(k - 1).toString());
-//            add(button, j, i);
             j = k % numeroColunas;
             if (j == 0) i++;
         }
-
-//        setHgap(0.5);
-//        setVgap(0.5);
 
         setStyle("-fx-border-color: gray white white gray; -fx-border-width: 3; -fx-border-radius: 2");
     }
