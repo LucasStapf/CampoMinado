@@ -1,23 +1,17 @@
 package com.stapf.campominado;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 //
         Campo campo = new Campo(Dificuldade.AVANCADO);
-//
+        campo.randomizaMinas(10, 10);
         Scene scene = new Scene(campo);
 //        Celula celula = new Celula();
 //        Scene scene = new Scene(celula);
