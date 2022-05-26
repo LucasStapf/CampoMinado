@@ -189,35 +189,31 @@ public class Campo extends GridPane {
 
     public void ativarCelulasVizinhasSemBombas(int linha, int coluna) {
 
-        if (celulas.get(indiceCelula(linha,coluna)).getMinasVizinhas() > 0
-        || celulas.get(indiceCelula(linha, coluna)).getStatus() == Status.ATIVADA) return;
+        if (celulas.get(indiceCelula(linha, coluna)).getStatus() == Status.ATIVADA) return;
 
         // padrão: cima, direita, baixo, esquerda
+        celulas.get(indiceCelula(linha, coluna)).setStatus(Status.ATIVADA);
+
+        if (celulas.get(indiceCelula(linha, coluna)).getMinasVizinhas() > 0
+                && !celulas.get(indiceCelula(linha, coluna)).isMinado()) return;
 
         if (linha - 1 >= 0) {
-            celulas.get(indiceCelula(linha - 1, coluna)).setStatus(Status.ATIVADA);
-            if (celulas.get(indiceCelula(linha - 1, coluna)).getMinasVizinhas() == 0)
+            if (!celulas.get(indiceCelula(linha - 1, coluna)).isMinado())
                 ativarCelulasVizinhasSemBombas(linha - 1, coluna);
         }
 
         if (coluna + 1 < numeroColunas) {
-
-            celulas.get(indiceCelula(linha, coluna + 1)).setStatus(Status.ATIVADA);
-            if (celulas.get(indiceCelula(linha, coluna + 1)).getMinasVizinhas() == 0)
+            if (!celulas.get(indiceCelula(linha, coluna + 1)).isMinado())
                 ativarCelulasVizinhasSemBombas(linha, coluna + 1);
         }
 
         if (linha + 1 < numeroLinhas) {
-
-            celulas.get(indiceCelula(linha + 1, coluna)).setStatus(Status.ATIVADA);
-            if (celulas.get(indiceCelula(linha + 1, coluna)).getMinasVizinhas() == 0)
+            if (!celulas.get(indiceCelula(linha + 1, coluna)).isMinado())
                 ativarCelulasVizinhasSemBombas(linha + 1, coluna);
         }
 
         if (coluna - 1 >= 0) {
-
-            celulas.get(indiceCelula(linha, coluna - 1)).setStatus(Status.ATIVADA);
-            if (celulas.get(indiceCelula(linha, coluna - 1)).getMinasVizinhas() == 0)
+            if (!celulas.get(indiceCelula(linha, coluna - 1)).isMinado())
                 ativarCelulasVizinhasSemBombas(linha, coluna - 1);
         }
     }
