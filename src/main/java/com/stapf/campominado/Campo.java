@@ -35,6 +35,9 @@ public class Campo extends GridPane {
      * Construtor padrão do Campo.
      */
     public Campo() {
+
+        setStyle("-fx-border-color: gray white white gray; -fx-border-width: 3; -fx-border-radius: 2");
+
         this.numeroLinhas = Dificuldade.INICIANTE.numeroMinas;
         this.numeroColunas = Dificuldade.INICIANTE.numeroColunas;
         this.numeroMinas = Dificuldade.INICIANTE.numeroMinas;
@@ -42,6 +45,9 @@ public class Campo extends GridPane {
     }
 
     public Campo(Dificuldade dificuldade) {
+
+        setStyle("-fx-border-color: gray white white gray; -fx-border-width: 3; -fx-border-radius: 2");
+
         this.numeroLinhas = dificuldade.numeroLinhas;
         this.numeroColunas = dificuldade.numeroColunas;
         this.numeroMinas = dificuldade.numeroMinas;
@@ -74,11 +80,7 @@ public class Campo extends GridPane {
         }
 
         for (int i = 0; i < totalCelulas; i++) {
-            switch (listaCelulas.get(i)) {
-                case -1 -> celulas.get(i).setMinado(true);
-                case 0 -> celulas.get(i).setSimbolo(Simbolo.PRESSIONADO);
-                default -> celulas.get(i).setSimbolo(Simbolo.PADRAO);
-            }
+            if (listaCelulas.get(i) == -1) celulas.get(i).setMinado(true);
         }
 
         for (int i = 0; i < numeroLinhas; i++) {
@@ -88,6 +90,9 @@ public class Campo extends GridPane {
         }
     }
 
+    /**
+     * Cria todas as células e constrói a matriz base para o campo.
+     */
     private void criarMatriz() {
 
         int totalCelulas = numeroLinhas * numeroColunas;
@@ -99,8 +104,6 @@ public class Campo extends GridPane {
             j = k % numeroColunas;
             if (j == 0) i++;
         }
-
-        setStyle("-fx-border-color: gray white white gray; -fx-border-width: 3; -fx-border-radius: 2");
     }
 
     /**
